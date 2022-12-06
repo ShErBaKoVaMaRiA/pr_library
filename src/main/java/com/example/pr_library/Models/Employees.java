@@ -4,21 +4,29 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.*;
+
 
 import java.sql.Date;
+
 
 @Entity
 public class Employees {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long UID;
-
+    @NotBlank(message =  "Поле не может быть пустым")
     private String surname;
+    @NotBlank(message =  "Поле не может быть пустым")
     private String name;
     private String middlename;
+    @Past(message="Дата должна быть в будущем времени")
     private Date datebirthday;
+    @Max(value=11, message="Значение слишком большое")
+    @Min(value=10, message="Паспорт заполнен не полностью")
     private String passport;
-    private String telefon;
+    @Pattern(regexp="^(\\+\\d{1,3}( )?)?((\\(\\d{3}\\))|\\d{3})[- .]?\\d{3}[- .]?\\d{4}$",message="Неверный формат")
+    private String telefon; //("+111 (202) 555-0125")
 
 
     public Employees() {
